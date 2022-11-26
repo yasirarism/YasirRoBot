@@ -6,10 +6,10 @@ import random
 import asyncio
 import aiofiles
 import datetime
-from Adarsh.utils.broadcast_helper import send_msg
-from Adarsh.utils.database import Database
-from Adarsh.bot import StreamBot
-from Adarsh.vars import Var
+from YasirRoBot.utils.broadcast_helper import send_msg
+from YasirRoBot.utils.database import Database
+from YasirRoBot.bot import StreamBot
+from YasirRoBot.vars import Var
 from pyrogram import filters, Client
 from pyrogram.types import Message
 db = Database(Var.DATABASE_URL, Var.name)

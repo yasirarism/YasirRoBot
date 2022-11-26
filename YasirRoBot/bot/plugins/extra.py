@@ -1,10 +1,10 @@
-from Adarsh.bot import StreamBot
+from YasirRoBot.bot import StreamBot
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram import filters
 import time
 import shutil, psutil
 from utils_bot import *
-from Adarsh import StartTime
+from YasirRoBot import StartTime
 
 
 START_TEXT = """ Your Telegram DC Is : `{}`  """
@@ -50,7 +50,7 @@ async def follow_user(b,m):
                     disable_web_page_preview=True)
         
 
-@StreamBot.on_message(filters.regex("DC"))
+@StreamBot.on_message(filters.regex("^DC"))
 async def start(bot, update):
     text = START_TEXT.format(update.from_user.dc_id)
     await update.reply_text(

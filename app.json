@@ -1,6 +1,6 @@
 {
-  "name": "Adarsh-",
-  "description": "A Pyrogram Telegram bot to Stream Telegram files to web. @adarshgoel",
+  "name": "YasirRoBot-",
+  "description": "A Pyrogram Telegram bot to Stream Telegram files to web.",
   "keywords": [
       "telegram",
       "stream",
@@ -13,10 +13,10 @@
       "media",
       "bot"
     ],
-  "repository": "https://github.com/adarsh-goel/-pro/",
+  "repository": "https://github.com/yasirarism/YasirRoBot/",
   "success_url": "/",
   "logo": "https://i.ibb.co/MnMZ1Sy/download-1.jpg",
-  "website": "http://adarsh.eu.org",
+  "website": "https://yasirweb.eu.org",
   "env": {
       "ENV": {
           "description": "Set this to True if you don't want to crash the bot",
@@ -55,7 +55,7 @@
           
       },
       "OWNER_USERNAME": {
-          "description": "Enter your username without @  example  adarsh."
+          "description": "Enter your username without @  example  yasirarism."
       },
       "SLEEP_THRESHOLD": {
           "description": "Floodwait Sleep timer. Read the readme for more info about this var",
@@ -94,7 +94,7 @@
           "required": false
       },
       "name": {
-          "description": " Session Name for Bot [ Add adarsh-goel]",
+          "description": " Session Name for Bot",
           "value": "File-To-Link",
           "required": false
       }

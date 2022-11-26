@@ -9,13 +9,13 @@ import secrets
 import mimetypes
 from aiohttp import web
 from aiohttp.http_exceptions import BadStatusLine
-from Adarsh.bot import multi_clients, work_loads, StreamBot
-from Adarsh.server.exceptions import FIleNotFound, InvalidHash
-from Adarsh import StartTime, __version__
+from YasirRoBot.bot import multi_clients, work_loads, StreamBot
+from YasirRoBot.server.exceptions import FIleNotFound, InvalidHash
+from YasirRoBot import StartTime, __version__
 from ..utils.time_format import get_readable_time
 from ..utils.custom_dl import ByteStreamer
-from Adarsh.utils.render_template import render_page
-from Adarsh.vars import Var
+from YasirRoBot.utils.render_template import render_page
+from YasirRoBot.vars import Var
 
 
 routes = web.RouteTableDef()
