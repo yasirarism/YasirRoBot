@@ -61,7 +61,7 @@ async def private_receive_handler(c: Client, m: Message):
             Var.BIN_CHANNEL,
             f"New User Joined! : \n\n Name : [{m.from_user.first_name}](tg://user?id={m.from_user.id}) Started Your Bot!!"
         )
-    if Var.UPDATES_CHANNEL != "None":
+    if Var.UPDATES_CHANNEL:
         try:
             user = await c.get_chat_member(Var.UPDATES_CHANNEL, m.chat.id)
             if user.status == "kicked":
@@ -75,11 +75,11 @@ async def private_receive_handler(c: Client, m: Message):
         except UserNotParticipant:
             await c.send_message(
                 chat_id=m.chat.id,
-                text="""<i>𝙹𝙾𝙸𝙽 UPDATES CHANNEL 𝚃𝙾 𝚄𝚂𝙴 𝙼𝙴 🔐</i>""",
+                text="""<i>Join Updates Channel To Use Me 🔐</i>""",
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
-                            InlineKeyboardButton("Jᴏɪɴ ɴᴏᴡ 🔓", url=f"https://t.me/{Var.UPDATES_CHANNEL}")
+                            InlineKeyboardButton("Join Now 🔓", url=f"https://t.me/{Var.UPDATES_CHANNEL}")
                         ]
                     ]
                 ),
@@ -90,7 +90,7 @@ async def private_receive_handler(c: Client, m: Message):
             await m.reply_text(e)
             await c.send_message(
                 chat_id=m.chat.id,
-                text="**Sᴏᴍᴇᴛʜɪɴɢ ᴡᴇɴᴛ Wʀᴏɴɢ. Cᴏɴᴛᴀᴄᴛ ᴍʏ ʙᴏss** [Adarsh Goel](https://github.com/adarsh-goel)",
+                text="**Something Went Wrong. Contact My Owner** [Yasir Aris M](https://github.com/yasirarism)",
                 
                 disable_web_page_preview=True)
             return
@@ -99,9 +99,9 @@ async def private_receive_handler(c: Client, m: Message):
         stream_link = f"{Var.URL}watch/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
         online_link = f"{Var.URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
        
-        msg_text ="""<i><u>𝗬𝗼𝘂𝗿 𝗟𝗶𝗻𝗸 𝗚𝗲𝗻𝗲𝗿𝗮𝘁𝗲𝗱 !</u></i>\n\n<b>📂 Fɪʟᴇ ɴᴀᴍᴇ :</b> <i>{}</i>\n\n<b>📦 Fɪʟᴇ ꜱɪᴢᴇ :</b> <i>{}</i>\n\n<b>📥 Dᴏᴡɴʟᴏᴀᴅ :</b> <i>{}</i>\n\n<b> 🖥WATCH  :</b> <i>{}</i>\n\n<b>🚸 Nᴏᴛᴇ : LINK WON'T EXPIRE TILL I DELETE</b>"""
+        msg_text ="""<i><u>Your Link Generated !</u></i>\n\n<b>📂 FileName :</b> <i>{}</i>\n\n<b>📦 File Size :</b> <i>{}</i>\n\n<b>📥 Download :</b> <i>{}</i>\n\n<b> 🖥Watch  :</b> <i>{}</i>\n\n<b>🚸 Notes : LINK WON'T EXPIRED TILL I DELETE IT</b>"""
 
-        await log_msg.reply_text(text=f"**RᴇQᴜᴇꜱᴛᴇᴅ ʙʏ :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**Uꜱᴇʀ ɪᴅ :** `{m.from_user.id}`\n**Stream ʟɪɴᴋ :** {stream_link}", disable_web_page_preview=True,  quote=True)
+        await log_msg.reply_text(text=f"**Requested By :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**User ID :** `{m.from_user.id}`\n**Stream Link :** {stream_link}", disable_web_page_preview=True,  quote=True)
         await m.reply_text(
             text=msg_text.format(get_name(log_msg), humanbytes(get_media_file_size(m)), online_link, stream_link),
             quote=True,
@@ -136,7 +136,7 @@ async def channel_receive_handler(bot, broadcast):
         stream_link = f"{Var.URL}watch/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
         online_link = f"{Var.URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
         await log_msg.reply_text(
-            text=f"**Channel Name:** `{broadcast.chat.title}`\n**CHANNEL ID:** `{broadcast.chat.id}`\n**Rᴇǫᴜᴇsᴛ ᴜʀʟ:** {stream_link}",
+            text=f"**Channel Name:** `{broadcast.chat.title}`\n**CHANNEL ID:** `{broadcast.chat.id}`\n**REQUEST URL:** {stream_link}",
             quote=True
         )
         await bot.edit_message_reply_markup(
@@ -150,11 +150,11 @@ async def channel_receive_handler(bot, broadcast):
             )
         )
     except FloodWait as w:
-        print(f"Sleeping for {str(w.x)}s")
-        await asyncio.sleep(w.x)
+        print(f"Sleeping for {str(w.value)}s")
+        await asyncio.sleep(w.value)
         await bot.send_message(chat_id=Var.BIN_CHANNEL,
-                             text=f"GOT FLOODWAIT OF {str(w.x)}s FROM {broadcast.chat.title}\n\n**CHANNEL ID:** `{str(broadcast.chat.id)}`",
+                             text=f"Got Floodwait of {str(w.value)}s from {broadcast.chat.title}\n\n**CHANNEL ID:** `{str(broadcast.chat.id)}`",
                              disable_web_page_preview=True)
     except Exception as e:
         await bot.send_message(chat_id=Var.BIN_CHANNEL, text=f"**#ERROR_TRACKEBACK:** `{e}`", disable_web_page_preview=True)
-        print(f"Cᴀɴ'ᴛ Eᴅɪᴛ Bʀᴏᴀᴅᴄᴀsᴛ Mᴇssᴀɢᴇ!\nEʀʀᴏʀ:  **Give me edit permission in updates and bin Channel!{e}**")
+        print(f"Can't Edit Broadcast Message!\nERROR:  **Give me edit permission in updates and bin channels!{e}**")
