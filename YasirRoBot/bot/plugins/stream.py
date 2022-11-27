@@ -95,16 +95,29 @@ async def private_receive_handler(c: Client, m: Message):
 © @YasirRoBot"""
 
         await log_msg.reply_text(text=f"**Requested By :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**User ID :** `{m.from_user.id}`\n**Stream Link :** {stream_link}", disable_web_page_preview=True, quote=True)
+        await m.reply_sticker(
+            "CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ"
+        )
         await m.reply_text(
             text=msg_text.format(m.from_user.mention, get_name(log_msg), humanbytes(get_media_file_size(m)), online_link, stream_link),
             quote=True,
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🖥 Streaming Link", url=stream_link), InlineKeyboardButton("📥 Download Link", url=online_link)]]),  # Stream Link  # Download Link
+            reply_markup=InlineKeyboardMarkup([
+                [
+                    InlineKeyboardButton("🖥 Streaming Link",
+                                         url=stream_link),  #Stream Link
+                    InlineKeyboardButton('📥 Download Link', url=online_link)
+                ],  #Download Link
+                [
+                    InlineKeyboardButton(
+                        '💰 Donasi', url=f"https://t.me/{(await c.get_me()).username}?start=donasi")
+                ]
+            ])
         )
     except FloodWait as e:
         print(f"Sleeping for {str(e.value)}s")
         await asyncio.sleep(e.value)
-        await c.send_message(chat_id=Var.BIN_CHANNEL, text=f"Got floodwait of {str(e.value)}s from [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n**𝚄𝚜𝚎𝚛 𝙸𝙳 :** `{str(m.from_user.id)}`", disable_web_page_preview=True)
+        await c.send_message(chat_id=Var.BIN_CHANNEL, text=f"Got floodwait of {str(e.value)}s from [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n**User ID :** `{str(m.from_user.id)}`", disable_web_page_preview=True)
 
 
 @StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.forwarded, group=-1)
@@ -123,15 +136,30 @@ async def channel_receive_handler(bot, broadcast):
         await bot.leave_chat(broadcast.chat.id)
         return
     try:
-        log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
+        try:
+            log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
+        except Exception:
+            log_msg = await broadcast.copy(chat_id=Var.BIN_CHANNEL)
         stream_link = f"{Var.URL}tonton/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
         online_link = f"{Var.URL}unduh/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
+
+        ubotname = (await bot.get_me()).username
+        button = []
+        if broadcast.chat.id == -1001686184174:
+            button.append([InlineKeyboardButton("📥 Stream & Download Link", url=f"https://t.me/{ubotname}?start=YasirBot_{str(log_msg.id)}")])
+            button.append([InlineKeyboardButton("💰 Donasi", url=f"https://t.me/{ubotname}?start=donasi")])
+        else:
+            button.append([InlineKeyboardButton("📥 Stream & Download Link", url=f"https://t.me/{ubotname}?start=YasirBot_{str(log_msg.id)}")])
         await log_msg.reply_text(text=f"**Channel Name:** `{broadcast.chat.title}`\n**CHANNEL ID:** `{broadcast.chat.id}`\n**REQUEST URL:** {stream_link}", quote=True)
-        await bot.edit_message_reply_markup(chat_id=broadcast.chat.id, message_id=broadcast.id, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Streaming 🖥", url=stream_link), InlineKeyboardButton("Download 📥", url=online_link)]]))
+        await bot.edit_message_reply_markup(
+            chat_id=broadcast.chat.id,
+            message_id=broadcast.id,
+            reply_markup=InlineKeyboardMarkup(button)
+        )
     except FloodWait as w:
         print(f"Sleeping for {str(w.value)}s")
         await asyncio.sleep(w.value)
         await bot.send_message(chat_id=Var.BIN_CHANNEL, text=f"Got Floodwait of {str(w.value)}s from {broadcast.chat.title}\n\n**CHANNEL ID:** `{str(broadcast.chat.id)}`", disable_web_page_preview=True)
     except Exception as e:
-        await bot.send_message(chat_id=Var.BIN_CHANNEL, text=f"**#ERROR_TRACKEBACK:** `{e}`", disable_web_page_preview=True)
+        await bot.send_message(chat_id=Var.BIN_CHANNEL, text=f"**#ERROR_TRACEBACK:** `{e}`", disable_web_page_preview=True)
         print(f"Can't Edit Broadcast Message!\nERROR:  **Give me edit permission in updates and bin channels!{e}**")
