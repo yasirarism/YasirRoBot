@@ -3,7 +3,7 @@ from YasirRoBot.vars import Var
 from pyrogram import filters
 from YasirRoBot.utils.database import Database
 
-db = Database(Var.DATABASE_URL, Var.SESSION_NAME)
+db = Database(Var.DATABASE_URL, Var.name)
 
 
 @StreamBot.on_message(
