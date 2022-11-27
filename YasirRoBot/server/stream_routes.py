@@ -14,7 +14,8 @@ from YasirRoBot.server.exceptions import FIleNotFound, InvalidHash
 from YasirRoBot import StartTime, __version__
 from ..utils.time_format import get_readable_time
 from ..utils.custom_dl import ByteStreamer
-from YasirRoBot.utils.render_template import render_page
+from ..utils.render_template import render_page
+from ..utils.file_properties import get_hash
 from YasirRoBot.vars import Var
 
 
@@ -39,7 +40,7 @@ async def root_route_handler(_):
 async def stream_handler(request: web.Request):
     try:
         path = request.match_info["path"]
-        match = re.search(r"^([a-zA-Z0-9_-]{6})(\d+)$", path)
+        match = re.search(r"^([0-9a-f]{%s})(\d+)$" % (Var.HASH_LENGTH), path)
         if match:
             secure_hash = match.group(1)
             id = int(match.group(2))
@@ -62,7 +63,7 @@ async def stream_handler(request: web.Request):
 async def stream_handler(request: web.Request):
     try:
         path = request.match_info["path"]
-        match = re.search(r"^([a-zA-Z0-9_-]{6})(\d+)$", path)
+        match = re.search(r"^([0-9a-f]{%s})(\d+)$" % (Var.HASH_LENGTH), path)
         if match:
             secure_hash = match.group(1)
             id = int(match.group(2))
@@ -104,7 +105,7 @@ async def media_streamer(request: web.Request, id: int, secure_hash: str):
     file_id = await tg_connect.get_file_properties(id)
     logging.debug("after calling get_file_properties")
 
-    if file_id.unique_id[:6] != secure_hash:
+    if get_hash(file_id.unique_id, Var.HASH_LENGTH) != secure_hash:
         logging.debug(f"Invalid hash for message with ID {id}")
         raise InvalidHash
 

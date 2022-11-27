@@ -124,7 +124,9 @@ DATABASE_URL=mongodb_uri
 
 [![mongo](https://telegra.ph/file/fd68906852c71fdd68bef.jpg)](https://www.youtube.com/watch?v=HhHzCfrqsoE)
 
- Option Vars
+ Optional Vars
+
+`HASH_LENGTH`: Set custom hash length for generated urls
 
 `UPDATES_CHANNEL` : Put a Public Channel Username, so every user have to Join that channel to use the bot. Must add bot to channel as Admin to work properly.
 

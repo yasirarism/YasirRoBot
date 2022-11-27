@@ -24,13 +24,13 @@ logging.getLogger("aiohttp.web").setLevel(logging.ERROR)
 
 ppath = "YasirRoBot/bot/plugins/*.py"
 files = glob.glob(ppath)
-StreamBot.start()
 loop = asyncio.get_event_loop()
 
 
 async def start_services():
     print('\n')
     print('------------------- Initalizing Telegram Bot -------------------')
+    await StreamBot.start()
     bot_info = await StreamBot.get_me()
     StreamBot.username = bot_info.username
     print("------------------------------ DONE ------------------------------")
@@ -71,6 +71,8 @@ async def start_services():
     print('\n')
     print('----------------------- Service Started -----------------------------------------------------------------')
     print('                        bot =>> {}'.format((await StreamBot.get_me()).first_name))
+    if bot_info.dc_id:
+        print("                        DC ID =>> {}".format(str(bot_info.dc_id)))
     print('                        server ip =>> {}:{}'.format(bind_address, Var.PORT))
     print('                        Owner =>> {}'.format((Var.OWNER_USERNAME)))
     if Var.ON_HEROKU:
@@ -80,8 +82,18 @@ async def start_services():
     print('---------------------------------------------------------------------------------------------------------')
     await idle()
 
-if __name__ == '__main__':
+async def cleanup():
+    await server.cleanup()
+    await StreamBot.stop()
+
+if __name__ == "__main__":
     try:
         loop.run_until_complete(start_services())
     except KeyboardInterrupt:
-        logging.info('----------------------- Service Stopped -----------------------')
+        pass
+    except Exception as err:
+        logging.error(err.with_traceback(None))
+    finally:
+        loop.run_until_complete(cleanup())
+        loop.stop()
+        print("------------------------ Stopped Services ------------------------")

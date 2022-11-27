@@ -1,5 +1,6 @@
 # (c) adarsh-goel
 import os
+import sys
 from os import getenv, environ
 from dotenv import load_dotenv
 
@@ -23,6 +24,9 @@ class Var(object):
     NO_PORT = bool(getenv("NO_PORT", False))
     APP_NAME = None
     OWNER_USERNAME = str(getenv("OWNER_USERNAME"))
+    HASH_LENGTH = int(environ.get("HASH_LENGTH", 6))
+    if not 5 < HASH_LENGTH < 64:
+        sys.exit("Hash length should be greater than 5 and less than 64")
     if "DYNO" in environ:
         ON_HEROKU = True
         APP_NAME = str(getenv("APP_NAME"))

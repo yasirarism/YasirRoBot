@@ -1,5 +1,6 @@
+import hashlib
 from pyrogram import Client
-from typing import Any, Optional
+from typing import Any, Optional, Union
 from pyrogram.types import Message
 from pyrogram.file_id import FileId
 from pyrogram.raw.types.messages import Messages
@@ -18,8 +19,8 @@ async def parse_file_unique_id(message: "Messages") -> Optional[str]:
         return media.file_unique_id
 
 
-async def get_file_ids(client: Client, chat_id: int, id: int) -> Optional[FileId]:
-    message = await client.get_messages(chat_id, id)
+async def get_file_ids(client: Client, chat_id: int, message_id: int) -> Optional[FileId]:
+    message = await client.get_messages(chat_id, message_id)
     if message.empty:
         raise FIleNotFound
     media = get_media_from_message(message)
@@ -47,18 +48,21 @@ def get_media_from_message(message: "Message") -> Any:
         media = getattr(message, attr, None)
         if media:
             return media
-        else:
-            return None
 
 
-def get_hash(media_msg: Message) -> str:
-    media = get_media_from_message(media_msg)
-    return getattr(media, "file_unique_id", "")[:6]
+def get_hash(media_msg: Union[str, Message], length: int) -> str:
+    if isinstance(media_msg, Message):
+        media = get_media_from_message(media_msg)
+        unique_id = getattr(media, "file_unique_id", "")
+    else:
+        unique_id = media_msg
+    long_hash = hashlib.sha256(unique_id.encode("UTF-8")).hexdigest()
+    return long_hash[:length]
 
 
 def get_name(media_msg: Message) -> str:
     media = get_media_from_message(media_msg)
-    return getattr(media, "file_name", "TanpaNama")
+    return getattr(media, 'file_name', "")
 
 
 def get_media_file_size(m):

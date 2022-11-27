@@ -1,6 +1,7 @@
 # (c) Adarsh-Goel
 import os
 import asyncio
+import logging
 from asyncio import TimeoutError
 from YasirRoBot.bot import StreamBot
 from YasirRoBot.utils.database import Database
@@ -10,11 +11,10 @@ from urllib.parse import quote_plus
 from pyrogram import filters, Client
 from pyrogram.errors import FloodWait, UserNotParticipant
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-
 from YasirRoBot.utils.file_properties import get_name, get_hash, get_media_file_size
 
 db = Database(Var.DATABASE_URL, Var.name)
-
+logger = logging.getLogger(__name__)
 
 MY_PASS = os.environ.get("MY_PASS", None)
 pass_dict = {}
@@ -81,8 +81,9 @@ async def private_receive_handler(c: Client, m: Message):
             return
     try:
         log_msg = await m.forward(chat_id=Var.BIN_CHANNEL)
-        stream_link = f"{Var.URL}tonton/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
-        online_link = f"{Var.URL}unduh/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
+        file_hash = get_hash(log_msg, Var.HASH_LENGTH)
+        stream_link = f"{Var.URL}tonton/{log_msg.id}/{quote_plus(get_name(m))}?hash={file_hash}"
+        online_link = f"{Var.URL}unduh/{log_msg.id}/{quote_plus(get_name(m))}?hash={file_hash}"
 
         msg_text = """
 <i><u>Hai {}, Link mu sudah digenerate! 🤓</u></i>
@@ -107,6 +108,7 @@ async def private_receive_handler(c: Client, m: Message):
                 ]
             ),
         )
+        logger.info(f"Generated link: {stream_link} for {m.from_user.first_name}")
     except FloodWait as e:
         print(f"Sleeping for {str(e.value)}s")
         await asyncio.sleep(e.value)

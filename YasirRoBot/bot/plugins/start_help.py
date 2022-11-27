@@ -2,8 +2,6 @@
 from YasirRoBot.bot import StreamBot
 from YasirRoBot.vars import Var
 import logging
-
-logger = logging.getLogger(__name__)
 from YasirRoBot.bot.plugins.stream import MY_PASS
 from YasirRoBot.utils.database import Database
 from YasirRoBot.utils.human_readable import humanbytes
@@ -11,10 +9,11 @@ from pyrogram import filters
 from urllib.parse import quote_plus
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import UserNotParticipant
-
-db = Database(Var.DATABASE_URL, Var.name)
 from pyrogram.types import ReplyKeyboardMarkup
 from YasirRoBot.utils.file_properties import get_name, get_hash, get_media_file_size
+
+db = Database(Var.DATABASE_URL, Var.name)
+logger = logging.getLogger(__name__)
 
 if MY_PASS:
     buttonz = ReplyKeyboardMarkup([["start⚡️", "help📚", "login🔑", "DC", "Donate"], ["follow❤️", "ping📡", "status📊", "maintainers😎"]], resize_keyboard=True)
@@ -64,9 +63,9 @@ Klik /help untuk melihat info lengkapnya.\n
         await m.reply_photo("https://telegra.ph/file/b6c3b568c3e7cf4d7534a.png", caption="🌟 Jika kamu merasa bot ini sangat bermanfaat, kamu bisa donasi dengan scan kode QRIS yang ada di gambar in. Berapapun nilainya saya sangat berterimakasih..")
     else:
         log_msg = await b.get_messages(chat_id=Var.BIN_CHANNEL, message_ids=int(usr_cmd))
-
-        stream_link = f"{Var.URL}tonton/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
-        online_link = f"{Var.URL}unduh/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
+        file_hash = get_hash(log_msg, Var.HASH_LENGTH)
+        stream_link = f"{Var.URL}tonton/{log_msg.id}/{quote_plus(get_name(m))}?hash={file_hash}"
+        online_link = f"{Var.URL}unduh/{log_msg.id}/{quote_plus(get_name(m))}?hash={file_hash}"
 
         msg_text = """
 <u>Hai {}, Link kamu berhasil di generate! 🤓</u>
@@ -88,6 +87,7 @@ Klik /help untuk melihat info lengkapnya.\n
                 ]
             ),
         )
+        logger.info(f"Generated link: {stream_link} for {m.from_user.first_name}")
 
 
 @StreamBot.on_message((filters.command("help") | filters.regex("help📚")) & filters.private)
