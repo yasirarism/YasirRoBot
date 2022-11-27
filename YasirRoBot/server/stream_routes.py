@@ -59,7 +59,7 @@ async def stream_handler(request: web.Request):
         raise web.HTTPInternalServerError(text=str(e))
 
 
-@routes.get(r"/unduh/{path:\S+}", allow_head=True)
+@routes.get(r"/{path:\S+}", allow_head=True)
 async def stream_handler(request: web.Request):
     try:
         path = request.match_info["path"]

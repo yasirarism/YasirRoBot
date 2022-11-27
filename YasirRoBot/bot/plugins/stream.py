@@ -84,7 +84,7 @@ async def private_receive_handler(c: Client, m: Message):
         file_hash = get_hash(log_msg, Var.HASH_LENGTH)
         logger.info(get_name(log_msg))
         stream_link = f"{Var.URL}tonton/{log_msg.id}/{quote_plus(get_name(log_msg))}?hash={file_hash}"
-        online_link = f"{Var.URL}unduh/{log_msg.id}/{quote_plus(get_name(log_msg))}?hash={file_hash}"
+        online_link = f"{Var.URL}{log_msg.id}/{quote_plus(get_name(log_msg))}?hash={file_hash}"
 
         msg_text = """
 <i><u>Hai {}, Link mu sudah digenerate! 🤓</u></i>
