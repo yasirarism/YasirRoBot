@@ -1,7 +1,7 @@
 from YasirRoBot.vars import Var
 from YasirRoBot.bot import StreamBot
 from YasirRoBot.utils.human_readable import humanbytes
-from YasirRoBot.utils.file_properties import get_file_ids
+from YasirRoBot.utils.file_properties import get_file_ids, get_hash
 from YasirRoBot.server.exceptions import InvalidHash
 import urllib.parse
 import aiofiles
@@ -11,7 +11,7 @@ import aiohttp
 
 async def render_page(id, secure_hash):
     file_data = await get_file_ids(StreamBot, int(Var.BIN_CHANNEL), int(id))
-    if file_data.unique_id[:6] != secure_hash:
+    if get_hash(file_id.unique_id, Var.HASH_LENGTH) != secure_hash:
         logging.debug(f"link hash: {secure_hash} - {file_data.unique_id[:6]}")
         logging.debug(f"Invalid hash for message with - ID {id}")
         raise InvalidHash
