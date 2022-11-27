@@ -48,9 +48,7 @@ async def start(b, m):
             return
     usr_cmd = m.text.split("_")[-1]
     if usr_cmd == "/start":
-        await m.reply_sticker(
-            "CAACAgUAAxkBAAI7LmGrSXRRncbHQiifxd0f6gbqO0iSAAL5AAM0dhBWbFxFr9ji9CoeBA"
-        )
+        await m.reply_sticker("CAACAgUAAxkBAAI7LmGrSXRRncbHQiifxd0f6gbqO0iSAAL5AAM0dhBWbFxFr9ji9CoeBA")
         await m.reply_text(
             text=f"""
 👋 Hai {m.from_user.mention}, aku adalah <b>YasirRoBot</b>. Bot yang bisa mengubah file Telegram menjadi direct link dan link streaming tanpa nunggu lama.\n
@@ -60,15 +58,10 @@ Klik /help untuk melihat info lengkapnya.\n
 <b><u>PERINGATAN 🚸</u></b>
 <b>Jangan Spam bot!!!.</b>""",
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[
-                InlineKeyboardButton('Owner',
-                                     url=f"https://t.me/{Var.OWNER_USERNAME}"),
-                InlineKeyboardButton('YasirPediaChannel',
-                                     url='https://t.me/YasirPediaChannel')
-            ]]))
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Owner", url=f"https://t.me/{Var.OWNER_USERNAME}"), InlineKeyboardButton("YasirPediaChannel", url="https://t.me/YasirPediaChannel")]]),
+        )
     elif m.text == "/start donasi":
-        await m.reply_photo(
-            "https://telegra.ph/file/b6c3b568c3e7cf4d7534a.png", caption="🌟 Jika kamu merasa bot ini sangat bermanfaat, kamu bisa donasi dengan scan kode QRIS yang ada di gambar in. Berapapun nilainya saya sangat berterimakasih..")
+        await m.reply_photo("https://telegra.ph/file/b6c3b568c3e7cf4d7534a.png", caption="🌟 Jika kamu merasa bot ini sangat bermanfaat, kamu bisa donasi dengan scan kode QRIS yang ada di gambar in. Berapapun nilainya saya sangat berterimakasih..")
     else:
         log_msg = await b.get_messages(chat_id=Var.BIN_CHANNEL, message_ids=int(usr_cmd))
 
@@ -85,23 +78,16 @@ Klik /help untuk melihat info lengkapnya.\n
 <b>🚸 Catatan :</b> Dilarang Menggunakan Bot ini Untuk Download Po*n, Link tidak akan expired kecuali selama bot ini tidak terbanned.</b>
 <i>© @YasirRoBot </i>"""
 
-        await m.reply_sticker(
-            "CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ"
-        )
+        await m.reply_sticker("CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ")
         await m.reply_text(
-            text=msg_text.format(m.from_user.mention, get_name(log_msg), humanbytes(get_media_file_size(m)),
-                                 online_link, stream_link),
-            reply_markup=InlineKeyboardMarkup([
+            text=msg_text.format(m.from_user.mention, get_name(log_msg), humanbytes(get_media_file_size(m)), online_link, stream_link),
+            reply_markup=InlineKeyboardMarkup(
                 [
-                    InlineKeyboardButton("🖥 Stream Link",
-                                         url=stream_link),  #Stream Link
-                    InlineKeyboardButton('📥 Download Link', url=online_link)
-                ],  #Download Link
-                [
-                    InlineKeyboardButton(
-                        '💰 Donasi ke Owner', url=f"https://t.me/{(await b.get_me()).username}?start=donasi")
+                    [InlineKeyboardButton("🖥 Stream Link", url=stream_link), InlineKeyboardButton("📥 Download Link", url=online_link)],  # Stream Link  # Download Link
+                    [InlineKeyboardButton("💰 Donasi ke Owner", url=f"https://t.me/{(await b.get_me()).username}?start=donasi")],
                 ]
-            ]))
+            ),
+        )
 
 
 @StreamBot.on_message((filters.command("help") | filters.regex("help📚")) & filters.private)

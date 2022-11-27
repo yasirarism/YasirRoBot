@@ -95,24 +95,17 @@ async def private_receive_handler(c: Client, m: Message):
 © @YasirRoBot"""
 
         await log_msg.reply_text(text=f"**Requested By :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**User ID :** `{m.from_user.id}`\n**Stream Link :** {stream_link}", disable_web_page_preview=True, quote=True)
-        await m.reply_sticker(
-            "CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ"
-        )
+        await m.reply_sticker("CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ")
         await m.reply_text(
             text=msg_text.format(m.from_user.mention, get_name(log_msg), humanbytes(get_media_file_size(m)), online_link, stream_link),
             quote=True,
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([
+            reply_markup=InlineKeyboardMarkup(
                 [
-                    InlineKeyboardButton("🖥 Streaming Link",
-                                         url=stream_link),  #Stream Link
-                    InlineKeyboardButton('📥 Download Link', url=online_link)
-                ],  #Download Link
-                [
-                    InlineKeyboardButton(
-                        '💰 Donasi', url=f"https://t.me/{(await c.get_me()).username}?start=donasi")
+                    [InlineKeyboardButton("🖥 Streaming Link", url=stream_link), InlineKeyboardButton("📥 Download Link", url=online_link)],  # Stream Link  # Download Link
+                    [InlineKeyboardButton("💰 Donasi", url=f"https://t.me/{(await c.get_me()).username}?start=donasi")],
                 ]
-            ])
+            ),
         )
     except FloodWait as e:
         print(f"Sleeping for {str(e.value)}s")
@@ -151,11 +144,7 @@ async def channel_receive_handler(bot, broadcast):
         else:
             button.append([InlineKeyboardButton("📥 Stream & Download Link", url=f"https://t.me/{ubotname}?start=YasirBot_{str(log_msg.id)}")])
         await log_msg.reply_text(text=f"**Channel Name:** `{broadcast.chat.title}`\n**CHANNEL ID:** `{broadcast.chat.id}`\n**REQUEST URL:** {stream_link}", quote=True)
-        await bot.edit_message_reply_markup(
-            chat_id=broadcast.chat.id,
-            message_id=broadcast.id,
-            reply_markup=InlineKeyboardMarkup(button)
-        )
+        await bot.edit_message_reply_markup(chat_id=broadcast.chat.id, message_id=broadcast.id, reply_markup=InlineKeyboardMarkup(button))
     except FloodWait as w:
         print(f"Sleeping for {str(w.value)}s")
         await asyncio.sleep(w.value)
