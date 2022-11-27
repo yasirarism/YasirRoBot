@@ -81,6 +81,7 @@ Klik /help untuk melihat info lengkapnya.\n
 <b>📦 Ukuran File :</b> <code>{}</code>
 <b>📥 Download Video :</b> <code>{}</code>
 <b>🖥 Tonton Video nya  :</b> <code>{}</code>
+
 <b>🚸 Catatan :</b> Dilarang Menggunakan Bot ini Untuk Download Po*n, Link tidak akan expired kecuali selama bot ini tidak terbanned.</b>
 <i>© @YasirRoBot </i>"""
 
