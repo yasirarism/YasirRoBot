@@ -56,7 +56,7 @@ def get_hash(media_msg: Message) -> str:
 
 def get_name(media_msg: Message) -> str:
     media = get_media_from_message(media_msg)
-    return getattr(media, "file_name", "")
+    return getattr(media, "file_name", "TanpaNama")
 
 
 def get_media_file_size(m):
