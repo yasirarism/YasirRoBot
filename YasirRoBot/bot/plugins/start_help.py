@@ -64,8 +64,8 @@ Klik /help untuk melihat info lengkapnya.\n
     else:
         log_msg = await b.get_messages(chat_id=Var.BIN_CHANNEL, message_ids=int(usr_cmd))
         file_hash = get_hash(log_msg, Var.HASH_LENGTH)
-        stream_link = f"{Var.URL}tonton/{log_msg.id}/{quote_plus(get_name(m))}?hash={file_hash}"
-        online_link = f"{Var.URL}unduh/{log_msg.id}/{quote_plus(get_name(m))}?hash={file_hash}"
+        stream_link = f"{Var.URL}tonton/{log_msg.id}/{quote_plus(get_name(log_msg))}?hash={file_hash}"
+        online_link = f"{Var.URL}unduh/{log_msg.id}/{quote_plus(get_name(log_msg))}?hash={file_hash}"
 
         msg_text = """
 <u>Hai {}, Link kamu berhasil di generate! 🤓</u>

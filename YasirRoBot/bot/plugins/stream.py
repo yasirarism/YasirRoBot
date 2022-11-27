@@ -82,8 +82,8 @@ async def private_receive_handler(c: Client, m: Message):
     try:
         log_msg = await m.forward(chat_id=Var.BIN_CHANNEL)
         file_hash = get_hash(log_msg, Var.HASH_LENGTH)
-        stream_link = f"{Var.URL}tonton/{log_msg.id}/{quote_plus(get_name(m))}?hash={file_hash}"
-        online_link = f"{Var.URL}unduh/{log_msg.id}/{quote_plus(get_name(m))}?hash={file_hash}"
+        stream_link = f"{Var.URL}tonton/{log_msg.id}/{quote_plus(get_name(log_msg))}?hash={file_hash}"
+        online_link = f"{Var.URL}unduh/{log_msg.id}/{quote_plus(get_name(log_msg))}?hash={file_hash}"
 
         msg_text = """
 <i><u>Hai {}, Link mu sudah digenerate! 🤓</u></i>
