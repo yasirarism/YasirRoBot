@@ -139,8 +139,9 @@ async def channel_receive_handler(bot, broadcast):
             log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
         except Exception:
             log_msg = await broadcast.copy(chat_id=Var.BIN_CHANNEL)
-        stream_link = f"{Var.URL}tonton/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
-        online_link = f"{Var.URL}unduh/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
+        file_hash = get_hash(log_msg, Var.HASH_LENGTH)
+        stream_link = f"{Var.URL}tonton/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={file_hash}"
+        online_link = f"{Var.URL}unduh/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={file_hash}"
 
         ubotname = (await bot.get_me()).username
         button = []
