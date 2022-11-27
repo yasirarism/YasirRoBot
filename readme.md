@@ -1,8 +1,3 @@
-![GitHub contributors](https://img.shields.io/github/contributors/adarsh-goel/filestreambot-pro?style=flat&color=green)
-![GitHub repo size](https://img.shields.io/github/repo-size/adarsh-goel/filestreambot-pro?color=green)
-![GitHub](https://img.shields.io/github/license/adarsh-goel/filestreambot-pro?color=green)
-
-
 <h1 align="center"></h1>
 <p align="center"> 
   <img src="https://socialify.git.ci/yasirarism/YasirRoBot/image?description=1&font=Bitter&forks=1&issues=1&language=1&name=1&owner=1&pattern=Brick%20Wall&pulls=1&stargazers=1&theme=Dark" alt="Cover Image" width="650">
@@ -13,16 +8,10 @@
     <br />
    </strong></a>
     <br />
-    <a href="https://github.com/adarsh-goel/pro/issues">Report a Bug</a>
-    |
-    <a href="https://github.com/adarsh-goel/filestreambot-pro/issues">Request Feature</a>
   </p>
 
 
 <hr>
-
-## Please Follow me so you know whenever I release a new Project!❤️‍🔥
-### Incase you are having trouble deploying bot you may hire developer we have reasonable rates [click here](https://t.me/+KvjFjOWicuZmOTQx)
 
 ## 🍁 About This Bot :
 
@@ -52,7 +41,7 @@ Press the below button to Fast deploy on Heroku/Raiwlay
 Either you could locally host or deploy on [Heroku](https://heroku.com)
 ### 💜 Heroku
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy/)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/yasirarism/YasirRoBot)
 
 <br>
 
@@ -85,12 +74,12 @@ then goto the <a href="#mandatory-vars">variables tab</a> for more info on setti
 
 
 ```py
-git clone https://github.com/adarsh-goel/filestreambot-pro
-cd filestreambot-pro
+git clone https://github.com/yasirarism/YasirRoBot
+cd YasirRoBot
 virtualenv -p /usr/bin/python3 venv
 . ./venv/bin/activate
 pip install -r requirements.txt
-python3 -m Adarsh
+python3 -m YasirRoBot
 ```
 
 and to stop the whole bot,
@@ -170,5 +159,5 @@ Bot also Supported with Channels. Just add bot Channel as Admin. If any new file
 
 ### Credits : 
 
-- [Me](https://github.com/adarsh-goel)
+- [Code Creator Adarsh](https://github.com/Adarsh-Goel/Filestreambot-pro)
 - Everyone In This Journey !
