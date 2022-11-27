@@ -11,10 +11,12 @@ async def parse_file_id(message: "Message") -> Optional[FileId]:
     if media:
         return FileId.decode(media.file_id)
 
+
 async def parse_file_unique_id(message: "Messages") -> Optional[str]:
     media = get_media_from_message(message)
     if media:
         return media.file_unique_id
+
 
 async def get_file_ids(client: Client, chat_id: int, id: int) -> Optional[FileId]:
     message = await client.get_messages(chat_id, id)
@@ -28,6 +30,7 @@ async def get_file_ids(client: Client, chat_id: int, id: int) -> Optional[FileId
     setattr(file_id, "file_name", getattr(media, "file_name", ""))
     setattr(file_id, "unique_id", file_unique_id)
     return file_id
+
 
 def get_media_from_message(message: "Message") -> Any:
     media_types = (
@@ -50,9 +53,11 @@ def get_hash(media_msg: Message) -> str:
     media = get_media_from_message(media_msg)
     return getattr(media, "file_unique_id", "")[:6]
 
+
 def get_name(media_msg: Message) -> str:
     media = get_media_from_message(media_msg)
-    return getattr(media, 'file_name', "")
+    return getattr(media, "file_name", "")
+
 
 def get_media_file_size(m):
     media = get_media_from_message(m)

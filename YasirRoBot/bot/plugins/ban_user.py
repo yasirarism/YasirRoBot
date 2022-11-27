@@ -6,12 +6,10 @@ from YasirRoBot.utils.database import Database
 db = Database(Var.DATABASE_URL, Var.name)
 
 
-@StreamBot.on_message(
-    filters.command('ban') & filters.private & filters.user(Var.OWNER_ID))
+@StreamBot.on_message(filters.command("ban") & filters.private & filters.user(Var.OWNER_ID))
 async def ban_handler(bot, m):
     if len(m.command) == 1:
-        await m.reply_text(
-            text="🚫 Gunakan: /ban [id user] untuk membanned pengguna.")
+        await m.reply_text(text="🚫 Gunakan: /ban [id user] untuk membanned pengguna.")
         return
     user = m.command[1]
     if not await db.is_banned(user):
@@ -21,13 +19,10 @@ async def ban_handler(bot, m):
         await m.reply(f"🚫 User {user} sudah dibanned sebelumnya.")
 
 
-@StreamBot.on_message(
-    filters.command('unban') & filters.private
-    & filters.user(Var.OWNER_ID))
+@StreamBot.on_message(filters.command("unban") & filters.private & filters.user(Var.OWNER_ID))
 async def rm_ban_handler(bot, m):
     if len(m.command) == 1:
-        await m.reply_text(
-            text="🚫 Gunakan: /unban [id user] untuk unban pengguna.")
+        await m.reply_text(text="🚫 Gunakan: /unban [id user] untuk unban pengguna.")
         return
     user = m.command[1]
     await db.remove_ban(user)
