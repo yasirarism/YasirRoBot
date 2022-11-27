@@ -47,6 +47,8 @@ def get_media_from_message(message: "Message") -> Any:
         media = getattr(message, attr, None)
         if media:
             return media
+        else:
+            return None
 
 
 def get_hash(media_msg: Message) -> str:
