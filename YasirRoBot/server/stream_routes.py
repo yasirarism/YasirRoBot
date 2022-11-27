@@ -47,7 +47,6 @@ async def stream_handler(request: web.Request):
         else:
             message_id = int(re.search(r"(\d+)(?:\/\S+)?", path).group(1))
             secure_hash = request.rel_url.query.get("hash")
-        logging.info(secure_hash)
         return web.Response(text=await render_page(message_id, secure_hash), content_type="text/html")
     except InvalidHash as e:
         raise web.HTTPForbidden(text=e.message)

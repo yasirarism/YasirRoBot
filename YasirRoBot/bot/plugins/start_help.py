@@ -31,7 +31,7 @@ async def start(b, m):
     if Var.UPDATES_CHANNEL:
         try:
             user = await b.get_chat_member(Var.UPDATES_CHANNEL, m.chat.id)
-            if user.status == "kicked":
+            if user.status.value == "kicked":
                 await b.send_message(chat_id=m.chat.id, text="__Sorry, You're banned for using Me. Contact the bot owner__\n\n  **Maybe he will help you..**", disable_web_page_preview=True)
                 return
         except UserNotParticipant:
@@ -100,7 +100,7 @@ async def help_handler(bot, message):
     if Var.UPDATES_CHANNEL:
         try:
             user = await bot.get_chat_member(Var.UPDATES_CHANNEL, message.chat.id)
-            if user.status == "kicked":
+            if user.status.value == "kicked":
                 await bot.send_message(chat_id=message.chat.id, text="<i>Sorry, You're banned from using me. Contact Bot Owner.</i>", disable_web_page_preview=True)
                 return
         except UserNotParticipant:

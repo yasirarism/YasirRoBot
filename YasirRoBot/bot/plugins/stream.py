@@ -65,7 +65,7 @@ async def private_receive_handler(c: Client, m: Message):
     if Var.UPDATES_CHANNEL:
         try:
             user = await c.get_chat_member(Var.UPDATES_CHANNEL, m.chat.id)
-            if user.status == "kicked":
+            if user.status.value == "kicked":
                 await c.send_message(chat_id=m.chat.id, text="You are banned!\n\n  **Contact Owner [Yasir Aris](https://t.me/yasirarism) maybe he will help you**", disable_web_page_preview=True)
                 return
         except UserNotParticipant:
@@ -82,6 +82,7 @@ async def private_receive_handler(c: Client, m: Message):
     try:
         log_msg = await m.forward(chat_id=Var.BIN_CHANNEL)
         file_hash = get_hash(log_msg, Var.HASH_LENGTH)
+        logger.info(get_name(log_msg))
         stream_link = f"{Var.URL}tonton/{log_msg.id}/{quote_plus(get_name(log_msg))}?hash={file_hash}"
         online_link = f"{Var.URL}unduh/{log_msg.id}/{quote_plus(get_name(log_msg))}?hash={file_hash}"
 
