@@ -15,6 +15,16 @@ class Database:
             join_date=datetime.date.today().isoformat()
         )
 
+    async def add_ban_user(self, id):
+        await self.ban.insert_one({'id': int(id)})
+
+    async def is_banned(self, id):
+        user = await self.ban.find_one({'id': int(id)})
+        return bool(user)
+
+    async def remove_ban(self, user_id):
+        await self.ban.delete_many({'id': int(user_id)})
+
     async def add_user(self, id):
         user = self.new_user(id)
         await self.col.insert_one(user)
