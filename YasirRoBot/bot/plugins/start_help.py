@@ -64,7 +64,10 @@ Klik /help untuk melihat info lengkapnya.\n
     else:
         log_msg = await b.get_messages(chat_id=Var.BIN_CHANNEL, message_ids=int(usr_cmd))
         file_hash = get_hash(log_msg, Var.HASH_LENGTH)
-        filename = quote_plus(get_name(m))
+        try:
+            filename = quote_plus(get_name(m))
+        except:
+            filename = ""
         stream_link = f"{Var.URL}tonton/{log_msg.id}/{filename}?hash={file_hash}"
         online_link = f"{Var.URL}{log_msg.id}/{filename}?hash={file_hash}"
 
