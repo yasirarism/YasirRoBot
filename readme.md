@@ -1,6 +1,6 @@
 <h1 align="center"></h1>
 <p align="center"> 
-  <img src="https://socialify.git.ci/yasirarism/YasirRoBot/image?description=1&font=Bitter&forks=1&issues=1&language=1&name=1&owner=1&pattern=Brick%20Wall&pulls=1&stargazers=1&theme=Dark" alt="Cover Image" width="650">
+  <img src="https://socialify.git.ci/yasirarism/MissKatyPyro?description=1&font=Raleway&forks=1&issues=1&language=1&logo=https%3A%2F%2Fi.ibb.co%2FPrNF7HY%2Fphoto-2022-12-02-22-04-51.jpg&name=1&owner=1&pulls=1&stargazers=1&theme=Dark" alt="Cover Image" width="650">
   </a>
   
  <p align="center">
