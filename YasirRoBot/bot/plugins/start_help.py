@@ -78,7 +78,7 @@ Klik /help untuk melihat info lengkapnya.\n
 <b>📥 Download Video :</b> <code>{}</code>
 <b>🖥 Tonton Video nya  :</b> <code>{}</code>
 
-<b>🚸 Catatan :</b> Dilarang Menggunakan Bot ini Untuk Download Po*n, Link tidak akan expired kecuali selama bot ini tidak terbanned.</b>
+<b>🚸 Catatan :</b> Dilarang Menggunakan Bot ini Untuk Download Porn, jika ketahuan saya akan menghentikan layanan bot ini.</b>
 <i>© @YasirRoBot </i>"""
 
         await m.reply_sticker("CAACAgUAAxkBAAI7NGGrULQlM1jMxCIHijO2SIVGuNpqAAKaBgACbkBiKqFY2OIlX8c-HgQ")

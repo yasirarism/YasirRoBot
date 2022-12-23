@@ -96,7 +96,7 @@ async def private_receive_handler(c: Client, m: Message):
 <b>📥 Download Video :</b> <code>{}</code>
 <b>🖥 Tonton Video nya  :</b> <code>{}</code>
 
-<b>🚸CATATAN : Dilarang menggunakan bot ini untuk download Po*n, Link tidak akan expired kecuali ada yang menyalahgunakan bot ini.</b>
+<b>🚸CATATAN : Dilarang menggunakan bot ini untuk download Porn, jika ketahuan saya akan menghentikan layanan bot ini.</b>
 © @YasirRoBot"""
 
         await log_msg.reply_text(text=f"**Requested By :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**User ID :** `{m.from_user.id}`\n**Stream Link :** {stream_link}", disable_web_page_preview=True, quote=True)
