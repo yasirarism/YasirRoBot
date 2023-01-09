@@ -85,12 +85,12 @@ async def stream_handler(request: web.Request):
 class_cache = {}
 
 
-async def media_streamer(request: web.Request, id: int, secure_hash: str):
+async def media_streamer(request: web.Request, message_id: int, secure_hash: str):
     range_header = request.headers.get("Range", 0)
-
+    
     index = min(work_loads, key=work_loads.get)
     faster_client = multi_clients[index]
-
+    
     if Var.MULTI_CLIENT:
         logging.info(f"Client {index} is now serving {request.remote}")
 
@@ -102,13 +102,14 @@ async def media_streamer(request: web.Request, id: int, secure_hash: str):
         tg_connect = ByteStreamer(faster_client)
         class_cache[faster_client] = tg_connect
     logging.debug("before calling get_file_properties")
-    file_id = await tg_connect.get_file_properties(id)
+    file_id = await tg_connect.get_file_properties(message_id)
     logging.debug("after calling get_file_properties")
-
+    
+    
     if get_hash(file_id.unique_id, Var.HASH_LENGTH) != secure_hash:
-        logging.debug(f"Invalid hash for message with ID {id}")
+        logging.debug(f"Invalid hash for message with ID {message_id}")
         raise InvalidHash
-
+    
     file_size = file_id.file_size
 
     if range_header:
@@ -135,8 +136,9 @@ async def media_streamer(request: web.Request, id: int, secure_hash: str):
 
     req_length = until_bytes - from_bytes + 1
     part_count = math.ceil(until_bytes / chunk_size) - math.floor(offset / chunk_size)
-    body = tg_connect.yield_file(file_id, index, offset, first_part_cut, last_part_cut, part_count, chunk_size)
-
+    body = tg_connect.yield_file(
+        file_id, index, offset, first_part_cut, last_part_cut, part_count, chunk_size
+    )
     mime_type = file_id.mime_type
     file_name = file_id.file_name
     disposition = "attachment"
@@ -153,6 +155,9 @@ async def media_streamer(request: web.Request, id: int, secure_hash: str):
         else:
             mime_type = "application/octet-stream"
             file_name = f"{secrets.token_hex(2)}.unknown"
+
+    if "video/" in mime_type or "audio/" in mime_type or "/html" in mime_type:
+        disposition = "inline"
 
     return web.Response(
         status=206 if range_header else 200,
