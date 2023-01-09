@@ -18,7 +18,7 @@ async def maintainers(b, m):
         await b.send_message(
             chat_id=m.chat.id,
             text="My Creator is [Yasir Aris M](https://github.com/yasirarism)",
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Original Developer💻", url=f"https://github.com/adarsh-goel")]]),
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Source Code 💻", url=f"https://github.com/yasirarism/YasirRoBot")]]),
             disable_web_page_preview=True,
         )
 
