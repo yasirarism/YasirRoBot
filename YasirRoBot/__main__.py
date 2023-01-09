@@ -83,7 +83,6 @@ async def start_services():
     await idle()
 
 async def cleanup():
-    await server.cleanup()
     await StreamBot.stop()
 
 if __name__ == "__main__":
