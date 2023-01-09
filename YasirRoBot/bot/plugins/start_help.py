@@ -21,7 +21,7 @@ else:
     buttonz = ReplyKeyboardMarkup([["start⚡️", "help📚", "DC", "Donate"], ["follow❤️", "ping📡", "status📊", "maintainers😎"]], resize_keyboard=True)
 
 
-@StreamBot.on_message((filters.command("start") | filters.regex("start⚡️")) & filters.private)
+@StreamBot.on_message((filters.command("start") | filters.regex("^start⚡️") | filters.regex("^Donate")) & filters.private)
 async def start(b, m):
     if await db.is_banned(int(m.from_user.id)):
         return await m.reply("🚫 Maaf, kamu dibanned dari bot ini oleh owner saya karena kamu melanggar aturan penggunaan bot. Terimakasih..\n\n🚫 Sorry, you have been banned from this bot because you have violated the user rules. Thank you..")
@@ -59,7 +59,7 @@ Klik /help untuk melihat info lengkapnya.\n
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Owner", url=f"https://t.me/{Var.OWNER_USERNAME}"), InlineKeyboardButton("YasirPediaChannel", url="https://t.me/YasirPediaChannel")]]),
         )
-    elif m.text == "/start donasi":
+    elif m.text == "/start donasi" or m.text.startswith("Donasi"):
         await m.reply_photo("https://telegra.ph/file/b6c3b568c3e7cf4d7534a.png", caption="🌟 Jika kamu merasa bot ini sangat bermanfaat, kamu bisa donasi dengan scan kode QRIS yang ada di gambar in. Berapapun nilainya saya sangat berterimakasih..")
     else:
         log_msg = await b.get_messages(chat_id=Var.BIN_CHANNEL, message_ids=int(usr_cmd))
@@ -94,7 +94,7 @@ Klik /help untuk melihat info lengkapnya.\n
         logger.info(f"Generated link: {stream_link} for {m.from_user.first_name}")
 
 
-@StreamBot.on_message((filters.command("help") | filters.regex("help📚")) & filters.private)
+@StreamBot.on_message((filters.command("help") | filters.regex("^help📚")) & filters.private)
 async def help_handler(bot, message):
     if await db.is_banned(int(message.from_user.id)):
         return await message.reply("🚫 Maaf, kamu dibanned dari bot ini oleh owner saya karena kamu melanggar aturan penggunaan bot. Terimakasih..\n\n🚫 Sorry, you have been banned from this bot because you have violated the user rules. Thank you..")
