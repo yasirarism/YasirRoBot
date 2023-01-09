@@ -46,7 +46,7 @@ async def start(b, m):
             await b.send_message(chat_id=m.chat.id, text="<i>Something When Wrong</i> <b> <a href='https://github.com/adarsh-goel'>CLICK HERE FOR SUPPORT </a></b>", disable_web_page_preview=True)
             return
     usr_cmd = m.text.split("_")[-1]
-    if usr_cmd == "/start":
+    if usr_cmd == "/start" or usr_cmd == "start⚡️":
         await m.reply_sticker("CAACAgUAAxkBAAI7LmGrSXRRncbHQiifxd0f6gbqO0iSAAL5AAM0dhBWbFxFr9ji9CoeBA", reply_markup=buttonz)
         await m.reply_text(
             text=f"""
