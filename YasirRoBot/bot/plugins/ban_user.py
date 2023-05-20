@@ -29,4 +29,4 @@ async def rm_ban_handler(bot, m):
         await m.reply(f"🚫 User {user} is not added banned list before.")
     else:
         await db.remove_ban(user)
-        await m.reply(f"🚫 User {user} has been banned from this bot.")
+        await m.reply(f"🚫 User {user} has been unbanned from this bot.")
